@@ -33,8 +33,8 @@ const TILE_SIZE = 16
 const type = (isWebGLSupported()) ? "WebGL" : "canvas"
 utils.sayHello(type)
 
-const mapWidth = 48
-const mapHeight = 32
+const mapWidth = 50
+const mapHeight = 34
 
 const app = new Application({
   /*
@@ -65,23 +65,39 @@ const mapchipFiles: { [k: number]: string } = {
 }
 
 
-const renderMap = (map: MapType): void => {
+const renderMap = (map: MapType, ui: typeof uiState): void => {
 	map.forEach((row, rowIndex) => {
+		if (
+			rowIndex < ui.cursorPoint.y - Math.floor(Math.floor(mapHeight / 2 - 1) / ui.magnification) ||
+			rowIndex > ui.cursorPoint.y + Math.floor(Math.floor(mapHeight / 2 - 1) / ui.magnification)
+		) {
+			// 見えていない部分はスキップ
+			return
+    }
+
 		row.forEach((column, columnIndex) => {
+      if (
+        columnIndex < ui.cursorPoint.x - Math.floor(Math.floor(mapWidth / 2 - 1) / ui.magnification) ||
+        columnIndex > ui.cursorPoint.x + Math.floor(Math.floor(mapWidth / 2 - 1) / ui.magnification)
+      ) {
+        // 見えていない部分はスキップ
+				return
+			}
+
 			const assign = tileState2Tile(column)
 
 			if (assign !== MapAssign.none) {
 				const tile = new Sprite(loader.resources[mapchipFiles[assign]].texture)
-				tile.x = TILE_SIZE * (columnIndex - uiState.cursorPoint.x) * uiState.magnification + (TILE_SIZE * Math.floor((mapWidth - 1) / 2))
-        tile.y = TILE_SIZE * (rowIndex - uiState.cursorPoint.y) * uiState.magnification + (TILE_SIZE * Math.floor((mapHeight - 1) / 2))
-        tile.scale.set(uiState.magnification, uiState.magnification)
+				tile.x = TILE_SIZE * (columnIndex - ui.cursorPoint.x) * ui.magnification + (TILE_SIZE * Math.floor((mapWidth - 1) / 2))
+        tile.y = TILE_SIZE * (rowIndex - ui.cursorPoint.y) * ui.magnification + (TILE_SIZE * Math.floor((mapHeight - 1) / 2))
+        tile.scale.set(ui.magnification, ui.magnification)
 				app.stage.addChild(tile)
 			}
 
 			const frame = new Sprite(loader.resources["mapchip_frame.png"].texture)
-			frame.x = TILE_SIZE * (columnIndex - uiState.cursorPoint.x) * uiState.magnification + (TILE_SIZE * Math.floor((mapWidth - 1) / 2))
-			frame.y = TILE_SIZE * (rowIndex - uiState.cursorPoint.y) * uiState.magnification + (TILE_SIZE * Math.floor((mapHeight - 1) / 2))
-      frame.scale.set(uiState.magnification, uiState.magnification)
+			frame.x = TILE_SIZE * (columnIndex - ui.cursorPoint.x) * ui.magnification + (TILE_SIZE * Math.floor((mapWidth - 1) / 2))
+			frame.y = TILE_SIZE * (rowIndex - ui.cursorPoint.y) * ui.magnification + (TILE_SIZE * Math.floor((mapHeight - 1) / 2))
+      frame.scale.set(ui.magnification, ui.magnification)
 			app.stage.addChild(frame)
 		})
 	})
@@ -105,7 +121,7 @@ loader
     "cursor-tile.png",
 	])
 	.load(() => {
-    renderMap(mapState)
+    renderMap(mapState, uiState)
     renderUi(mapState)
 
 		app.renderer.render(app.stage)
