@@ -1,0 +1,26 @@
+{
+  "name": "YuushanoKuseniNamaikida",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "parcel": "parcel src/assets/* ",
+    "start": "parcel build src/assets/images/**/*.png && parcel src/html/index.html",
+    "pixi": "parcel build examples/pixi-example/images/*.png && parcel examples/pixi-example/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/pixi.js": "^4.8.6",
+    "parcel-bundler": "^1.12.3",
+    "tslib": "^1.9.3",
+    "typescript": "^3.3.3333"
+  },
+  "dependencies": {
+    "assets": "^3.0.1",
+    "phaser": "^3.16.2",
+    "pixi.js": "^4.8.7"
+  }
+}
