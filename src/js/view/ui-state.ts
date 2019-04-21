@@ -1,6 +1,4 @@
-import {
-  MapSize,
-} from "./map-state"
+import { MapSize } from "./map-state"
 
 const cursorPoint = {
   x: Math.floor(MapSize.width / 2),

@@ -1,3 +1,1 @@
-export default class GameObject {
-}
-
+export default class GameObject {}
