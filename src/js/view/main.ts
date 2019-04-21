@@ -9,6 +9,7 @@ import {
   TileType,
   MapType,
   tileState2Tile,
+  creaturesReferences,
 } from "./map-state"
 
 import { uiState } from "./ui-state"
