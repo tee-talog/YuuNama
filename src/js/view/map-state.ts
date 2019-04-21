@@ -1,3 +1,7 @@
+import { Sprite } from "pixi.js"
+
+import Creature from "../object/Creature"
+
 export const MapAssign = {
   none: 0,
   zero: 1,
@@ -15,11 +19,15 @@ export type TileType = {
   broken: boolean
   nourishment: number
   magicment: number
+  sprite: Sprite | null
+  creatures: Array<Creature>
 }
 const defaultTileState: TileType = {
   broken: false,
   nourishment: 0,
   magicment: 0,
+  sprite: null,
+  creatures: [],
 }
 export type MapType = Array<Array<TileType>>
 const m: MapType = Array(MapSize.height)
