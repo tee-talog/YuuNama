@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "parcel": "parcel src/assets/* ",
-    "start": "parcel build src/assets/images/**/*.png && parcel src/html/index.html",
+    "start": " prettier src/**/*.ts --write && parcel build src/assets/images/**/*.png && parcel src/html/index.html",
     "pixi": "parcel build examples/pixi-example/images/*.png && parcel examples/pixi-example/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
