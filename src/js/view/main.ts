@@ -72,25 +72,25 @@ const renderMap = (map: MapType): void => {
 
 			if (assign !== MapAssign.none) {
 				const tile = new Sprite(loader.resources[mapchipFiles[assign]].texture)
-				tile.x = TILE_SIZE * (columnIndex - uiState.cursorPoint.x) * uiState.magnification + (TILE_SIZE * Math.floor(mapWidth / 2))
-        tile.y = TILE_SIZE * (rowIndex - uiState.cursorPoint.y) * uiState.magnification + (TILE_SIZE * Math.floor(mapHeight / 2))
+				tile.x = TILE_SIZE * (columnIndex - uiState.cursorPoint.x) * uiState.magnification + (TILE_SIZE * Math.floor((mapWidth - 1) / 2))
+        tile.y = TILE_SIZE * (rowIndex - uiState.cursorPoint.y) * uiState.magnification + (TILE_SIZE * Math.floor((mapHeight - 1) / 2))
         tile.scale.set(uiState.magnification, uiState.magnification)
 				app.stage.addChild(tile)
 			}
 
 			const frame = new Sprite(loader.resources["mapchip_frame.png"].texture)
-			frame.x = TILE_SIZE * (columnIndex - uiState.cursorPoint.x) * uiState.magnification + (TILE_SIZE * Math.floor(mapWidth / 2))
-			frame.y = TILE_SIZE * (rowIndex - uiState.cursorPoint.y) * uiState.magnification + (TILE_SIZE * Math.floor(mapHeight / 2))
+			frame.x = TILE_SIZE * (columnIndex - uiState.cursorPoint.x) * uiState.magnification + (TILE_SIZE * Math.floor((mapWidth - 1) / 2))
+			frame.y = TILE_SIZE * (rowIndex - uiState.cursorPoint.y) * uiState.magnification + (TILE_SIZE * Math.floor((mapHeight - 1) / 2))
       frame.scale.set(uiState.magnification, uiState.magnification)
 			app.stage.addChild(frame)
 		})
 	})
 }
 
-const renderUi = (): void => {
+const renderUi = (map: MapType): void => {
   const cursor = new Sprite(loader.resources["cursor-tile.png"].texture)
-  cursor.x = Math.floor(mapWidth / 2) * TILE_SIZE
-  cursor.y = Math.floor(mapHeight / 2) * TILE_SIZE
+  cursor.x = Math.floor((mapWidth - 1) / 2) * TILE_SIZE
+  cursor.y = Math.floor((mapHeight - 1) / 2) * TILE_SIZE
   cursor.scale.set(uiState.magnification, uiState.magnification)
   app.stage.addChild(cursor)
 }
@@ -106,7 +106,7 @@ loader
 	])
 	.load(() => {
     renderMap(mapState)
-    renderUi()
+    renderUi(mapState)
 
 		app.renderer.render(app.stage)
 		app.ticker.add(gameLoop)

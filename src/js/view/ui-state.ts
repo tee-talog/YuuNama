@@ -12,5 +12,5 @@ export const uiState = {
   horiPower: 100,
   isOpenInfo: false,
   // 表示倍率
-  magnification: 1,
+  magnification: 2,
 }
