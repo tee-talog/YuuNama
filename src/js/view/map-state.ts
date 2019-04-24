@@ -38,7 +38,7 @@ const m: MapType = Array(MapSize.height)
       .map(() => ({ ...defaultTileState })),
   )
 
-export const creaturesReferences: Array<{ x: number, y: number }> = []
+export const creaturesReferences: Array<{ x: number; y: number }> = []
 
 // ランダムに初期値入れる
 // 対象のタイルの数

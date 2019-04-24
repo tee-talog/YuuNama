@@ -48,6 +48,7 @@ document.body.appendChild(app.view)
 // ----------------------------------------
 
 const mapchipFiles: { [k: number]: string } = {
+  // TODO これ none も透明なタイルをアサインしておくほうがよさそう
   [MapAssign.zero]: "mapchip/mapchip_425.png",
   [MapAssign.nourishment1]: "mapchip/mapchip_332.png",
   [MapAssign.nourishment2]: "mapchip/mapchip_077.png",
@@ -116,11 +117,31 @@ const renderUi = (map: MapType): void => {
   app.stage.addChild(cursor)
 }
 
+const initializeMapSprite = (): void => {
+  for (let rowIndex = 0; rowIndex < mapState.length; rowIndex++) {
+    for (
+      let columnIndex = 0;
+      columnIndex < mapState[rowIndex].length;
+      columnIndex++
+    ) {
+      const assign = tileState2Tile(mapState[rowIndex][columnIndex])
+      if (assign === MapAssign.none) {
+        return
+      }
+      mapState[rowIndex][columnIndex].sprite = new Sprite(
+        loader.resources[mapchipFiles[assign]].texture,
+      )
+    }
+  }
+}
+
 const gameLoop = (delta: number) => {}
 
 loader
   .add([...Object.values(mapchipFiles), "mapchip_frame.png", "cursor-tile.png"])
   .load(() => {
+    initializeMapSprite()
+
     renderMap(mapState, uiState)
     renderUi(mapState)
 
