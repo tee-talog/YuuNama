@@ -2,11 +2,11 @@ import { utils, Application, loader, Sprite, Rectangle } from "pixi.js"
 
 const { isWebGLSupported, TextureCache } = utils
 
-import { getMapState, MapType, initializeMapSprite } from "./map-state"
+import { getMapState, MapType, initializeMapSprite, updateMapState } from "./map-state"
 
 import tileState2Tile from "./tile-state-to-tile"
 
-import { uiState } from "./ui-state"
+import { getUiState, updateUiState, UiStateType } from "./ui-state"
 
 import Keyboard from "../controller/keyboard"
 
@@ -43,7 +43,7 @@ document.body.appendChild(app.view)
 
 // ----------------------------------------
 
-const renderMap = (map: MapType, ui: typeof uiState): void => {
+const renderMap = (map: MapType, ui: UiStateType): void => {
   map.forEach((row, rowIndex) => {
     if (
       rowIndex <
@@ -97,11 +97,11 @@ const renderMap = (map: MapType, ui: typeof uiState): void => {
   })
 }
 
-const renderUi = (map: MapType): void => {
+const renderUi = (map: MapType, ui: UiStateType): void => {
   const cursor = new Sprite(loader.resources["cursor-tile.png"].texture)
   cursor.x = Math.floor((mapWidth - 1) / 2) * TILE_SIZE
   cursor.y = Math.floor((mapHeight - 1) / 2) * TILE_SIZE
-  cursor.scale.set(uiState.magnification, uiState.magnification)
+  cursor.scale.set(ui.magnification, ui.magnification)
   app.stage.addChild(cursor)
 }
 
@@ -118,8 +118,9 @@ loader
     initializeMapSprite()
 
     const mapState = getMapState()
+    const uiState = getUiState()
     renderMap(mapState, uiState)
-    renderUi(mapState)
+    renderUi(mapState, uiState)
 
     app.renderer.render(app.stage)
     app.ticker.add(gameLoop)

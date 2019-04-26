@@ -5,10 +5,17 @@ const cursorPoint = {
   y: 0,
 }
 
-export const uiState = {
+const state = {
   cursorPoint,
   horiPower: 100,
   isOpenInfo: false,
   // 表示倍率
   magnification: 2,
+}
+export type UiStateType = typeof state
+
+export const getUiState = (): typeof state => state
+
+export const updateUiState = (): void => {
+  // TODO
 }

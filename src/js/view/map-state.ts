@@ -60,6 +60,6 @@ export const initializeMapSprite = (): void => {
 
 export const getMapState = (): MapType => state
 
-export const updateMapState = () => {
+export const updateMapState = (): void => {
   // TODO
 }
