@@ -2,19 +2,15 @@ import { utils, Application, loader, Sprite, Rectangle } from "pixi.js"
 
 const { isWebGLSupported, TextureCache } = utils
 
-import {
-  MapAssign,
-  mapState,
-  MapSize,
-  TileType,
-  MapType,
-  tileState2Tile,
-  creaturesReferences,
-} from "./map-state"
+import { getMapState, MapType, initializeMapSprite } from "./map-state"
+
+import tileState2Tile from "./tile-state-to-tile"
 
 import { uiState } from "./ui-state"
 
 import Keyboard from "../controller/keyboard"
+
+import { MapAssign, MapchipFiles } from "./map-const"
 
 // TODO import のルートを@にアサインするやつとかやりたい
 
@@ -47,14 +43,6 @@ document.body.appendChild(app.view)
 
 // ----------------------------------------
 
-const mapchipFiles: { [k: number]: string } = {
-  // TODO これ none も透明なタイルをアサインしておくほうがよさそう
-  [MapAssign.zero]: "mapchip/mapchip_425.png",
-  [MapAssign.nourishment1]: "mapchip/mapchip_332.png",
-  [MapAssign.nourishment2]: "mapchip/mapchip_077.png",
-  [MapAssign.nourishment3]: "mapchip/mapchip_227.png",
-}
-
 const renderMap = (map: MapType, ui: typeof uiState): void => {
   map.forEach((row, rowIndex) => {
     if (
@@ -85,7 +73,7 @@ const renderMap = (map: MapType, ui: typeof uiState): void => {
       const assign = tileState2Tile(column)
 
       if (assign !== MapAssign.none) {
-        const tile = new Sprite(loader.resources[mapchipFiles[assign]].texture)
+        const tile = new Sprite(loader.resources[MapchipFiles[assign]].texture)
         tile.x =
           TILE_SIZE * (columnIndex - ui.cursorPoint.x) * ui.magnification +
           TILE_SIZE * Math.floor((mapWidth - 1) / 2)
@@ -117,31 +105,19 @@ const renderUi = (map: MapType): void => {
   app.stage.addChild(cursor)
 }
 
-const initializeMapSprite = (): void => {
-  for (let rowIndex = 0; rowIndex < mapState.length; rowIndex++) {
-    for (
-      let columnIndex = 0;
-      columnIndex < mapState[rowIndex].length;
-      columnIndex++
-    ) {
-      const assign = tileState2Tile(mapState[rowIndex][columnIndex])
-      if (assign === MapAssign.none) {
-        return
-      }
-      mapState[rowIndex][columnIndex].sprite = new Sprite(
-        loader.resources[mapchipFiles[assign]].texture,
-      )
-    }
-  }
-}
-
 const gameLoop = (delta: number) => {}
 
+// TODO
+/*
+github.io で実際にプレイできるようにする
+*/
+
 loader
-  .add([...Object.values(mapchipFiles), "mapchip_frame.png", "cursor-tile.png"])
+  .add([...Object.values(MapchipFiles), "mapchip_frame.png", "cursor-tile.png"])
   .load(() => {
     initializeMapSprite()
 
+    const mapState = getMapState()
     renderMap(mapState, uiState)
     renderUi(mapState)
 
