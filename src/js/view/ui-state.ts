@@ -16,6 +16,6 @@ export type UiStateType = typeof state
 
 export const getUiState = (): typeof state => state
 
-export const updateUiState = (): void => {
+export const updateUiState = (delta: number): void => {
   // TODO
 }

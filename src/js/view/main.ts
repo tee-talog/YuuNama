@@ -105,7 +105,10 @@ const renderUi = (map: MapType, ui: UiStateType): void => {
   app.stage.addChild(cursor)
 }
 
-const gameLoop = (delta: number) => {}
+const gameLoop = (delta: number) => {
+  updateMapState(delta)
+  updateUiState(delta)
+}
 
 // TODO
 /*

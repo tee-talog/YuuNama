@@ -60,6 +60,6 @@ export const initializeMapSprite = (): void => {
 
 export const getMapState = (): MapType => state
 
-export const updateMapState = (): void => {
+export const updateMapState = (delta: number): void => {
   // TODO
 }
