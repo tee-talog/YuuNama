@@ -8,13 +8,13 @@ export default class Keyboard {
     private onPress: () => void,
     private onRelease: () => void,
   ) {
-    window.addEventListener("keydown", this.downHandler, false)
-    window.addEventListener("keyup", this.upHandler, false)
+    window.addEventListener("keydown", (e) => this.downHandler(e), false)
+    window.addEventListener("keyup", (e) => this.upHandler(e), false)
   }
 
   unsubscribe() {
-    window.removeEventListener("keydown", this.downHandler)
-    window.removeEventListener("keyup", this.upHandler)
+    window.removeEventListener("keydown", (e) => this.downHandler(e))
+    window.removeEventListener("keyup", (e) => this.upHandler(e))
   }
 
   private downHandler(event: KeyboardEvent) {

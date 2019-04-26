@@ -1,15 +1,9 @@
 import { utils, Application, loader, Sprite, Rectangle } from "pixi.js"
-
 const { isWebGLSupported, TextureCache } = utils
 
 import { getMapState, MapType, initializeMapSprite, updateMapState } from "./map-state"
-
 import tileState2Tile from "./tile-state-to-tile"
-
 import { getUiState, updateUiState, UiStateType } from "./ui-state"
-
-import Keyboard from "../controller/keyboard"
-
 import { MapAssign, MapchipFiles } from "./map-const"
 
 // TODO import のルートを@にアサインするやつとかやりたい
@@ -108,6 +102,11 @@ const renderUi = (map: MapType, ui: UiStateType): void => {
 const gameLoop = (delta: number) => {
   updateMapState(delta)
   updateUiState(delta)
+
+  const mapState = getMapState()
+  const uiState = getUiState()
+  renderMap(mapState, uiState)
+  renderUi(mapState, uiState)
 }
 
 // TODO
