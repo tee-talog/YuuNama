@@ -18,7 +18,7 @@ export type UiStateType = typeof state
 export const getUiState = (): typeof state => state
 
 const arrowUp = new Keyboard(
-  "ArrowUp",
+  ["ArrowUp", "w"],
   () => {
     if (state.cursorPoint.y > 0) {
       state.cursorPoint.y -= 1
@@ -27,7 +27,7 @@ const arrowUp = new Keyboard(
   () => {},
 )
 const arrowDown = new Keyboard(
-  "ArrowDown",
+  ["ArrowDown", "s"],
   () => {
     if (state.cursorPoint.y < MapSize.height - 1) {
       state.cursorPoint.y += 1
@@ -36,7 +36,7 @@ const arrowDown = new Keyboard(
   () => {},
 )
 const arrowLeft = new Keyboard(
-  "ArrowLeft",
+  ["ArrowLeft", "a"],
   () => {
     if (state.cursorPoint.x > 0) {
       state.cursorPoint.x -= 1
@@ -45,7 +45,7 @@ const arrowLeft = new Keyboard(
   () => {},
 )
 const arrowRight = new Keyboard(
-  "ArrowRight",
+  ["ArrowRight", "d"],
   () => {
     if (state.cursorPoint.x < MapSize.width - 1) {
       state.cursorPoint.x += 1
