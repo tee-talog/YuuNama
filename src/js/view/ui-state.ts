@@ -1,13 +1,15 @@
 import { MapSize } from "./map-const"
 import Keyboard from "../controller/keyboard"
 
-const cursorPoint = {
+const initialCursorPoint = {
   x: Math.floor(MapSize.width / 2),
   y: 0,
 }
 
 const state = {
-  cursorPoint,
+  cursorPoint: {
+    ...initialCursorPoint,
+  },
   horiPower: 100,
   isOpenInfo: false,
   // 表示倍率
@@ -67,6 +69,13 @@ const arrowRight = new Keyboard(
   () => {},
   arrowRightPress,
   3,
+)
+
+const pushG = new Keyboard(
+  "g",
+  () => {
+    state.cursorPoint = { ...initialCursorPoint }
+  },
 )
 
 export const updateUiState = (delta: number): void => {
