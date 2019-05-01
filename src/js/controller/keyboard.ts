@@ -1,12 +1,15 @@
 export default class Keyboard {
   private isDown = false
   private isUp = true
+  private pressingFrame = 0
 
   // 何をハンドラの引数にするかは要検討
   constructor(
     private keyType: string | Array<string>,
-    private onPress: () => void,
-    private onRelease: () => void,
+    private onPress: () => void = () => {},
+    private onRelease: () => void = () => {},
+    private onPressing: () => void = () => {},
+    private runPerFrame: number = 1,
   ) {
     window.addEventListener("keydown", (e) => this.downHandler(e), false)
     window.addEventListener("keyup", (e) => this.upHandler(e), false)
@@ -30,8 +33,13 @@ export default class Keyboard {
         this.onPress()
       }
 
+      if (this.isDown && this.pressingFrame % this.runPerFrame === 0) {
+        this.onPressing()
+      }
+
       this.isDown = true
       this.isUp = false
+      this.pressingFrame++
       event.preventDefault()
     }
   }
@@ -44,6 +52,7 @@ export default class Keyboard {
 
       this.isDown = false
       this.isUp = true
+      this.pressingFrame = 0
       event.preventDefault()
     }
   }
