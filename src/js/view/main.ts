@@ -1,7 +1,12 @@
-import { utils, Application, loader, Sprite, Rectangle } from "pixi.js"
+import { utils, Application, loader, Sprite, Container } from "pixi.js"
 const { isWebGLSupported, TextureCache } = utils
 
-import { getMapState, MapType, initializeMapSprite, updateMapState } from "./map-state"
+import {
+  getMapState,
+  MapType,
+  initializeMapSprite,
+  updateMapState,
+} from "./map-state"
 import tileState2Tile from "./tile-state-to-tile"
 import { getUiState, updateUiState, UiStateType } from "./ui-state"
 import { MapAssign, MapchipFiles } from "./map-const"
@@ -37,7 +42,13 @@ document.body.appendChild(app.view)
 
 // ----------------------------------------
 
+let spriteContainer = new Container()
 const renderMap = (map: MapType, ui: UiStateType): void => {
+  // 表示されているマップチップを削除
+  app.stage.removeChild(spriteContainer)
+
+  spriteContainer = new Container()
+
   map.forEach((row, rowIndex) => {
     if (
       rowIndex <
@@ -75,7 +86,7 @@ const renderMap = (map: MapType, ui: UiStateType): void => {
           TILE_SIZE * (rowIndex - ui.cursorPoint.y) * ui.magnification +
           TILE_SIZE * Math.floor((mapHeight - 1) / 2)
         tile.scale.set(ui.magnification, ui.magnification)
-        app.stage.addChild(tile)
+        spriteContainer.addChild(tile)
       }
 
       const frame = new Sprite(loader.resources["mapchip_frame.png"].texture)
@@ -86,9 +97,10 @@ const renderMap = (map: MapType, ui: UiStateType): void => {
         TILE_SIZE * (rowIndex - ui.cursorPoint.y) * ui.magnification +
         TILE_SIZE * Math.floor((mapHeight - 1) / 2)
       frame.scale.set(ui.magnification, ui.magnification)
-      app.stage.addChild(frame)
+      spriteContainer.addChild(frame)
     })
   })
+  app.stage.addChild(spriteContainer)
 }
 
 const renderUi = (map: MapType, ui: UiStateType): void => {

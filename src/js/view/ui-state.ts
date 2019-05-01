@@ -17,26 +17,42 @@ export type UiStateType = typeof state
 
 export const getUiState = (): typeof state => state
 
-const arrowUp = new Keyboard("ArrowUp", () => {
-  if (state.cursorPoint.y > 0) {
-    state.cursorPoint.y -= 1
-  }
-}, () => {})
-const arrowDown = new Keyboard("ArrowDown", () => {
-  if (state.cursorPoint.y < MapSize.height - 1) {
-    state.cursorPoint.y += 1
-  }
-}, () => {})
-const arrowLeft = new Keyboard("ArrowLeft", () => {
-  if (state.cursorPoint.x > 0) {
-    state.cursorPoint.x -= 1
-  }
-}, () => {})
-const arrowRight = new Keyboard("ArrowRight", () => {
-  if (state.cursorPoint.x < MapSize.width - 1) {
-    state.cursorPoint.x += 1
-  }
-}, () => {})
+const arrowUp = new Keyboard(
+  "ArrowUp",
+  () => {
+    if (state.cursorPoint.y > 0) {
+      state.cursorPoint.y -= 1
+    }
+  },
+  () => {},
+)
+const arrowDown = new Keyboard(
+  "ArrowDown",
+  () => {
+    if (state.cursorPoint.y < MapSize.height - 1) {
+      state.cursorPoint.y += 1
+    }
+  },
+  () => {},
+)
+const arrowLeft = new Keyboard(
+  "ArrowLeft",
+  () => {
+    if (state.cursorPoint.x > 0) {
+      state.cursorPoint.x -= 1
+    }
+  },
+  () => {},
+)
+const arrowRight = new Keyboard(
+  "ArrowRight",
+  () => {
+    if (state.cursorPoint.x < MapSize.width - 1) {
+      state.cursorPoint.x += 1
+    }
+  },
+  () => {},
+)
 
 export const updateUiState = (delta: number): void => {
   // TODO

@@ -1,4 +1,4 @@
-import { utils, Application, loader, Sprite, Rectangle } from "pixi.js"
+import { utils, Application, loader, Sprite, Container } from "pixi.js"
 
 import { MapAssign, MapchipFiles, MapSize, TileType } from "./map-const"
 import tileState2Tile from "./tile-state-to-tile"
@@ -7,7 +7,6 @@ const defaultTileState: TileType = {
   broken: false,
   nourishment: 0,
   magicment: 0,
-  sprite: null,
   creatures: [],
 }
 export type MapType = Array<Array<TileType>>
@@ -51,9 +50,6 @@ export const initializeMapSprite = (): void => {
       if (assign === MapAssign.none) {
         return
       }
-      state[rowIndex][columnIndex].sprite = new Sprite(
-        loader.resources[MapchipFiles[assign]].texture,
-      )
     }
   }
 }

@@ -26,6 +26,5 @@ export type TileType = {
   broken: boolean
   nourishment: number
   magicment: number
-  sprite: Sprite | null
   creatures: Array<Creature>
 }
