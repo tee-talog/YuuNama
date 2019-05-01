@@ -19,6 +19,13 @@ export type UiStateType = typeof state
 
 export const getUiState = (): typeof state => state
 
+export const updateUiState = (delta: number): void => {
+  // TODO
+}
+
+// ------------------------------------------------------------
+// key listeners
+
 const arrowUpPress = () => {
   if (state.cursorPoint.y > 0) {
     state.cursorPoint.y -= 1
@@ -77,7 +84,3 @@ const pushG = new Keyboard(
     state.cursorPoint = { ...initialCursorPoint }
   },
 )
-
-export const updateUiState = (delta: number): void => {
-  // TODO
-}
